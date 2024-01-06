@@ -92,3 +92,27 @@ Link: https://blog.bytebytego.com/p/how-does-cdn-work
 
 8. **CDN Network**:
    - This process is part of a geographically distributed CDN network for efficient content delivery.
+
+# Time complexity
+
+Link: https://newsletter.francofernando.com/p/time-complexity
+
+1. **Purpose**: Time complexity evaluates how an algorithm's performance scales with the size of the input data.
+
+2. **Types of Complexity**:
+
+   - **Worst-Case Complexity**: Maximum number of steps for any input of size `n`. Most commonly used as it provides guarantees about the algorithm's upper limit.
+   - **Best-Case Complexity**: Minimum number of steps for any input of size `n`.
+   - **Average-Case Complexity**: Average number of steps over all possible instances of input size `n`.
+
+3. **Big Oh Notation**: Simplifies the expression of an algorithm's worst-case complexity by focusing on growth rates rather than precise step counts.
+
+4. **Common Complexity Classes**:
+   - **Constant - O(1)**: Time is independent of input size (e.g., adding two numbers).
+   - **Logarithmic - O(log n)**: Each step cuts the problem size in half (e.g., binary search).
+   - **Linear - O(n)**: Time grows linearly with input size (e.g., finding max in an array).
+   - **Superlinear - O(n log n)**: Combines linear and logarithmic growth (e.g., Quicksort, Mergesort).
+   - **Quadratic - O(n^2)**: Time grows with the square of input size (e.g., insertion sort).
+   - **Cubic - O(n^3)**: Involves triple nested loops (e.g., certain dynamic programming algorithms).
+   - **Exponential - O(c^n)**: Time doubles with each addition to input size (e.g., enumerating subsets).
+   - **Factorial - O(n!)**: Time grows with the factorial of input size (e.g., generating permutations).
