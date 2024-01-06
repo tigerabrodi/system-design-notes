@@ -116,3 +116,48 @@ Link: https://newsletter.francofernando.com/p/time-complexity
    - **Cubic - O(n^3)**: Involves triple nested loops (e.g., certain dynamic programming algorithms).
    - **Exponential - O(c^n)**: Time doubles with each addition to input size (e.g., enumerating subsets).
    - **Factorial - O(n!)**: Time grows with the factorial of input size (e.g., generating permutations).
+
+# 8 Reasons Why WhatsApp Was Able to Support 50 Billion Messages a Day With Only 32 Engineers
+
+Link: https://newsletter.systemdesign.one/p/whatsapp-engineering
+
+1. **Single Responsibility Principle**:
+
+   - Focus on core feature: Messaging.
+   - Avoided feature creep and unnecessary functionalities.
+   - Prioritized reliability above all.
+
+2. **Technology Stack**:
+
+   - Chose Erlang for server functionalities due to its scalability and support for hot-loading.
+   - Erlang's efficient threading and context-switching mechanisms contributed to performance.
+
+3. **Utilizing Existing Solutions**:
+
+   - Leveraged open-source solutions like Ejabberd, an Erlang-based messaging server.
+   - Customized existing solutions to fit specific needs.
+   - Integrated third-party services for functionalities like push notifications.
+
+4. **Cross-Cutting Concerns**:
+
+   - Emphasized aspects like monitoring and alerting for service health.
+   - Implemented Continuous Integration and Continuous Delivery for software development.
+
+5. **Scalability Strategies**:
+
+   - Adopted diagonal scaling, combining horizontal and vertical scaling methods.
+   - Ran servers on FreeBSD, optimized for handling millions of connections.
+   - Overprovisioned servers for handling traffic spikes and potential failures.
+
+6. **Continuous Improvement (Flywheel Effect)**:
+
+   - Regularly measured performance metrics to identify and eliminate bottlenecks.
+   - Maintained a cycle of continuous feedback and improvement.
+
+7. **Focus on Quality**:
+
+   - Conducted load testing to identify and address single points of failure.
+   - Used simulated production traffic for realistic testing.
+
+8. **Small Team Size**:
+   - Kept the engineering team small (32 engineers) to maintain efficiency and reduce communication overhead.
