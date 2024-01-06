@@ -54,3 +54,41 @@ When you type a URL into your browser:
 4. **HTTP Request**: Sends a request for the specific resource.
 5. **Server Response**: The server sends back the requested content.
 6. **Rendering**: The browser displays the webpage.
+
+# How does CDN work?
+
+Link: https://blog.bytebytego.com/p/how-does-cdn-work
+
+1. **Domain Name Lookup**:
+
+   - Bob enters `www.myshop.com` in his browser.
+   - The browser checks the local DNS cache for the domain.
+
+2. **DNS Resolver**:
+
+   - If not in the local cache, the browser contacts the DNS resolver (usually via the ISP).
+
+3. **Recursive Domain Resolution**:
+
+   - The DNS resolver performs recursive resolution for `www.myshop.com`.
+
+4. **CDN Integration**:
+
+   - Instead of pointing directly to the London server, the authoritative name server redirects to a CDN domain (`www.myshop.cdn.com`).
+
+5. **Load Balancer Query**:
+
+   - The DNS resolver queries the CDN load balancer domain (`www.myshop.lb.com`).
+
+6. **Optimal Server Selection**:
+
+   - The CDN load balancer selects the best CDN edge server based on factors like the user’s location and server load.
+
+7. **Content Delivery**:
+
+   - The browser connects to the chosen CDN edge server to load content.
+   - The content includes static (e.g., images, videos) and dynamic elements.
+   - If content is not on the edge server, it's fetched from higher-level CDN servers or the origin server in London.
+
+8. **CDN Network**:
+   - This process is part of a geographically distributed CDN network for efficient content delivery.
