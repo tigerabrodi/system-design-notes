@@ -41,3 +41,16 @@ Link: https://newsletter.systemdesigncodex.com/p/the-ingredients-to-delicious-so
    - Availability: Ability to operate despite issues (e.g., with one cook absent).
    - Measured in 'nines' (e.g., 99.9% availability).
    - Consistency: Synchronization of information across different parts of the system (e.g., order copies being in sync).
+
+# What happens when you type a URL into your browser?
+
+Link: https://blog.bytebytego.com/p/what-happens-when-you-type-a-url
+
+When you type a URL into your browser:
+
+1. **URL Parsing**: The browser identifies the HTTP protocol, domain, path, and resource.
+2. **DNS Lookup**: It searches for the IP address of the domain, checking various caches.
+3. **TCP Connection**: Establishes a connection with the server.
+4. **HTTP Request**: Sends a request for the specific resource.
+5. **Server Response**: The server sends back the requested content.
+6. **Rendering**: The browser displays the webpage.
