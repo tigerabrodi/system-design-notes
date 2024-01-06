@@ -22,3 +22,22 @@ Link: https://newsletter.systemdesigncodex.com/p/the-inevitable-law-governing-so
   2. **Structure Teams Effectively**: Place teams working on similar systems close to each other for better communication.
   3. **Avoid Dividing by Technology**: Instead of splitting teams by tech layers (front end, back end), focus on business features for smoother collaboration.
   4. **Use Architectural Insights**: Align team structures with desired software architecture, understanding that organizational decisions influence software design.
+
+# The Ingredients to Delicious Software
+
+Link: https://newsletter.systemdesigncodex.com/p/the-ingredients-to-delicious-software
+
+1. **Scalability**:
+
+   - Ability to handle increased workload efficiently.
+   - Important to identify the point where scaling becomes cost-ineffective.
+
+2. **Latency & Throughput**:
+
+   - Latency: Time taken to respond to a request (e.g., time to serve a cheese sandwich).
+   - Throughput: Number of requests handled in a given time (e.g., serving multiple customers).
+
+3. **Availability and Consistency**:
+   - Availability: Ability to operate despite issues (e.g., with one cook absent).
+   - Measured in 'nines' (e.g., 99.9% availability).
+   - Consistency: Synchronization of information across different parts of the system (e.g., order copies being in sync).
