@@ -161,3 +161,28 @@ Link: https://newsletter.systemdesign.one/p/whatsapp-engineering
 
 8. **Small Team Size**:
    - Kept the engineering team small (32 engineers) to maintain efficiency and reduce communication overhead.
+
+# This Is How Quora Shards MySQL to Handle 13+ Terabytes
+
+Link: https://newsletter.systemdesign.one/p/mysql-sharding
+
+1. **Vertical Sharding**:
+
+   - **Implementation**: Separating tables into different servers (leader-follower model).
+   - **Purpose**: Enhances write scalability.
+   - **Challenges**: Replication lag, transactional limitations, and potential performance issues for large tables.
+
+2. **Horizontal Sharding**:
+
+   - **Reasons for Adoption**: Addressing challenges with large tables such as schema changes and error risks.
+   - **Approach**: Splitting a logical table into multiple physical tables.
+
+3. **Key Decisions in Horizontal Sharding**:
+   - **Build vs. Buy**: Opted to build their own sharding solution, reusing vertical sharding logic.
+   - **Shard Level**: Focused on sharding at the table level due to extensive use of secondary indexes.
+   - **Sharding Method**: Chose range-based partitioning, favoring common range queries.
+   - **Metadata Management**: Stored shard metadata in Apache Zookeeper.
+   - **Database API**: Modified to handle sharding columns and keys, enhancing security against SQL injections.
+   - **Sharding Column Selection**: Based on latency sensitivity and query per second (QPS) considerations.
+   - **Cross-Shard Indexes**: Used to optimize non-sharding column queries, though with potential performance and consistency trade-offs.
+   - **Number of Shards**: Maintained a lower count to reduce latency in non-sharding column queries.
