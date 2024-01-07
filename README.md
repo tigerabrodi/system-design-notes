@@ -324,3 +324,45 @@ Link: https://newsletter.francofernando.com/p/caching
   - MRU: Most recently used.
   - LFU: Least frequently used.
   - RR: Random replacement.
+
+# Database Replication Under the Hood
+
+Link: https://newsletter.systemdesigncodex.com/p/database-replication-under-the-hood
+
+## Statement-based Replication
+
+- **How It Works**: The leader logs every SQL write statement (INSERT, UPDATE, DELETE) and forwards these statements to follower nodes.
+- **Advantages**:
+  - Efficient in network bandwidth, only SQL statements are transferred.
+  - Portable across different database versions.
+  - Simpler to implement.
+- **Limitations**:
+  - Non-deterministic functions (e.g., NOW(), UUID()) yield different values on replicas.
+  - Transactions involving auto-incrementing columns must be executed in the same order.
+  - Potential unforeseen effects due to triggers or stored procedures.
+
+## Shipping the Write-Ahead Log (WAL)
+
+- **Concept**: The WAL, an append-only sequence of all writes, is shared with follower nodes.
+- **Usage**: Common in databases like PostgreSQL.
+- **Advantage**: Creates an exact replica of the leader’s data structures.
+- **Disadvantage**: Tightly coupled to the storage engine, making it less flexible with database version changes and hindering zero-downtime upgrades.
+
+## Row-Based Replication
+
+- **Functionality**: Uses a logical log showing writes in a row format.
+- **Operation Details**:
+  - Inserts log new values for all columns.
+  - Deletes log identifiers for deleted rows.
+  - Updates log identifiers and new values for modified columns.
+- **Advantage**: Decouples from the storage engine, allowing backward compatibility and version flexibility between leader and follower databases.
+
+## Choosing Replication Methods
+
+- The choice depends on the specific requirements of the system, such as:
+  - Network efficiency.
+  - Consistency requirements.
+  - Database version compatibility.
+- **Statement-based Replication**: Best for simple, less concurrent environments.
+- **WAL Shipping**: Suitable for systems where exact replica and data integrity are critical.
+- **Row-Based Replication**: Ideal for environments requiring flexibility and compatibility across different database versions.
