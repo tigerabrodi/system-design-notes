@@ -251,3 +251,76 @@ Link: https://newsletter.systemdesigncodex.com/p/how-rate-limiting-works
 
 - **Silent Drop**: Fool attackers by silently dropping excess requests.
 - **Cached Rules**: Enhance performance with a cache for the rules engine and background updates for rule changes.
+
+# Caching
+
+Link: https://newsletter.francofernando.com/p/caching
+
+## Concept of Caching
+
+- **Purpose**: Speeds up data access by storing data temporarily in a fast-access hardware or software layer.
+- **Cache Hit**: Data is found in the cache.
+- **Cache Miss**: Data is not in the cache and must be fetched from its original location.
+
+## Caching in Distributed Systems
+
+- **Levels**: Hardware, OS, front-end, web apps, databases, etc.
+- **Roles**:
+  - Reducing latency.
+  - Saving network requests.
+  - Storing results of resource-intensive operations.
+  - Avoiding repetitive operations.
+
+## Types of Caching
+
+- **Application Caching**: Integrated into app code, checks cache before database access. Examples: Memcached, Redis.
+- **Database Caching**: Built into databases, requires no code changes, optimizes data retrieval.
+
+## Considerations and Challenges
+
+- **Cache Miss Rate**: High miss rates can add more latency.
+- **Stale Data**: Ensuring cache data is up-to-date and relevant.
+
+## Caching Strategies
+
+1. **Cache Aside (Lazy Loading)**:
+
+   - Direct read from cache. If miss, read from DB and update cache.
+   - Advantages: Good for read-heavy workloads. Cache only stores necessary data.
+   - Disadvantages: Can serve stale data. Initial cache misses.
+
+2. **Read Through**:
+
+   - Interact only with cache. Cache manages data fetching from DB.
+   - Simplifies app code but complicates cache implementation.
+
+3. **Write Through**:
+
+   - Writes data to cache and DB simultaneously.
+   - Ensures data consistency. Higher write latency.
+
+4. **Write Back (Asynchronous Writing)**:
+
+   - Writes data to cache, then asynchronously to DB.
+   - Lower write latency. Good for write-heavy workloads.
+
+5. **Write Around**:
+   - Writes directly to DB, cache only stores read data.
+   - Good for infrequently read data. Higher read latency for new data.
+
+## Choosing a Cache Strategy
+
+- **Depends on data access patterns**.
+- **Cache-Around**: Good for general-purpose, read-intensive applications.
+- **Write-Heavy Workloads**: Write-back approaches are beneficial.
+- **Infrequent Reads**: Write-around strategy.
+
+## Eviction Policies
+
+- **Manage Limited Cache Space**:
+  - FIFO: First in, first out.
+  - LIFO: Last in, first out.
+  - LRU: Least recently used.
+  - MRU: Most recently used.
+  - LFU: Least frequently used.
+  - RR: Random replacement.
