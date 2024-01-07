@@ -186,3 +186,27 @@ Link: https://newsletter.systemdesign.one/p/mysql-sharding
    - **Sharding Column Selection**: Based on latency sensitivity and query per second (QPS) considerations.
    - **Cross-Shard Indexes**: Used to optimize non-sharding column queries, though with potential performance and consistency trade-offs.
    - **Number of Shards**: Maintained a lower count to reduce latency in non-sharding column queries.
+
+# Making Your Database Highly Available
+
+Link: https://newsletter.systemdesigncodex.com/p/making-your-database-highly-available
+
+## Redundancy
+
+- **Purpose**: Ensure continuous database operation even if one server fails.
+- **Not Backup**: Unlike backups, redundancy involves running multiple active database instances.
+- **Cost of Outage**: Can be significantly high, averaging $7,900 per minute.
+- **Redundancy Patterns**:
+  - **Active-Passive**: One active server handles requests while others stand by.
+  - **Active-Active**: Multiple servers handle requests simultaneously.
+  - **Multi-Active**: An extension of Active-Active with more complex setups.
+
+## Isolation
+
+- **Goal**: Minimize disaster impact by physically separating database components.
+- **Degrees of Separation**:
+  - **Server**: Different servers in the same data center.
+  - **Rack**: Separate racks within a data center.
+  - **Data-Center**: Multiple data centers.
+  - **Availability Zone**: Distinct zones within a cloud provider's network.
+  - **Region**: Geographically dispersed locations.
