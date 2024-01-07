@@ -366,3 +366,50 @@ Link: https://newsletter.systemdesigncodex.com/p/database-replication-under-the-
 - **Statement-based Replication**: Best for simple, less concurrent environments.
 - **WAL Shipping**: Suitable for systems where exact replica and data integrity are critical.
 - **Row-Based Replication**: Ideal for environments requiring flexibility and compatibility across different database versions.
+
+# Consistent Hashing
+
+Link: https://newsletter.francofernando.com/p/consistent-hashing
+
+## Caching Servers
+
+- **Use Case**: Store frequently accessed data in fast, in-memory caches.
+- **Hashing Role**: Ensures identical requests are sent to the same server by hashing request attributes (IP, username, etc.).
+- **Challenge**: Maintaining effective caching when servers are added or removed.
+
+## Data Partitioning
+
+- **Purpose**: Distribute data across multiple database servers.
+- **Hashing Function**: Data keys are hashed to determine the server where data will be stored.
+- **Limitation**: Similar to caching, adding or removing servers complicates data distribution.
+
+## The Hashing Problem
+
+- **Goal**: Map keys (data identifiers or workload requests) to servers efficiently.
+- **Desired Properties**:
+  - **Balancing**: Equal distribution of keys among servers.
+  - **Scalability**: Easily adding or removing servers with minimal reconfiguration.
+  - **Lookup Speed**: Quickly finding the server for a given key.
+
+## Naïve Hashing Approach
+
+- **Method**: Number servers, use `hash(key) % N` to assign keys to servers.
+- **Drawback**: Not scalable. Changing server count (N) requires remapping all keys.
+
+## Consistent Hashing
+
+- **Concept**: Treat hash values as a circular space. Map keys and servers onto this circle.
+- **Operation**: Assign each key to the nearest server on the circle in a clockwise direction.
+- **Advantages**:
+  - Only a fraction of keys need remapping when adding/removing servers.
+  - Better scalability.
+- **Issue**: Does not guarantee even key distribution (balancing).
+
+## Virtual Nodes Solution
+
+- **Strategy**: Introduce replicas or virtual nodes for each server on the hash circle.
+- **Benefits**:
+  - Better balancing due to smaller ranges and more uniform key distribution.
+  - Faster rebalancing when servers are added or removed.
+  - Support for server fault tolerance and heterogeneity.
+- **Implementation**: Assign more virtual nodes to more powerful servers for load balancing.
