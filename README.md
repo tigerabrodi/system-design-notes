@@ -210,3 +210,44 @@ Link: https://newsletter.systemdesigncodex.com/p/making-your-database-highly-ava
   - **Data-Center**: Multiple data centers.
   - **Availability Zone**: Distinct zones within a cloud provider's network.
   - **Region**: Geographically dispersed locations.
+
+# How Rate Limiting Works?
+
+Link: https://newsletter.systemdesigncodex.com/p/how-rate-limiting-works
+
+## How Rate Limiting Works:
+
+1. **Concept**: Limits the number of requests sent to a server.
+2. **Implementation**: A rate limiter is used to control traffic to servers or APIs.
+
+## Key Concepts
+
+1. **Limit**: Maximum number of requests allowed in a set time frame (e.g., 600 requests per day).
+2. **Window**: The duration for the limit, varying from seconds to days.
+3. **Identifier**: A unique attribute (like User ID or IP address) to identify request senders.
+
+## Designing a Rate Limiter
+
+- **Process**:
+  1. **Count Requests**: Track the number of requests from a user or IP.
+  2. **Limit Exceeded**: If count exceeds the limit, block or restrict further requests.
+- **Considerations**:
+  - Storage of request counters.
+  - Rate limiting rules.
+  - Response strategy for blocked requests.
+  - Rule change implementation.
+  - Maintaining application performance.
+
+## System Components
+
+- **Rate Limiter Component**: Checks incoming requests against the rules and stored data (number of requests made).
+- **Rules Engine**: Defines the rate limiting rules.
+- **Cache**: Stores rate-limiting data for high throughput and low latency.
+- **Response Handling**:
+  - Allow request if within limit.
+  - Block request if over limit, typically with HTTP status code 429.
+
+## Improvements
+
+- **Silent Drop**: Fool attackers by silently dropping excess requests.
+- **Cached Rules**: Enhance performance with a cache for the rules engine and background updates for rule changes.
