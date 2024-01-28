@@ -413,3 +413,35 @@ Link: https://newsletter.francofernando.com/p/consistent-hashing
   - Faster rebalancing when servers are added or removed.
   - Support for server fault tolerance and heterogeneity.
 - **Implementation**: Assign more virtual nodes to more powerful servers for load balancing.
+
+# Why Replication Lag Occurs in Databases
+
+Link: https://newsletter.systemdesigncodex.com/p/why-replication-lag-occurs-in-databases
+
+- **Concept**: Replication Lag is the delay between a write operation on the leader node and its replication on follower nodes in a database system.
+
+- **Leader-based Replication Setup**:
+
+  - Writes are processed by a single node (leader).
+  - Read queries can be served by any replica (follower).
+  - Common in systems with more reads than writes.
+
+- **Asynchronous vs. Synchronous Replication**:
+
+  - **Synchronous**: All replicas must confirm write operations, causing potential unavailability if a replica is down.
+  - **Asynchronous**: Allows distribution of reads across followers, but can lead to outdated reads if a follower lags.
+
+- **How Replication Lag Occurs**:
+
+  1. User A updates data on the leader node.
+  2. Leader sends replication data to followers.
+  3. User B reads from a follower (replica 2) before it's updated, receiving outdated information.
+  4. Replica 2 eventually gets updated.
+
+- **Implications**:
+
+  - Lag duration varies from fractions of a second to minutes.
+  - Causes temporary data inconsistencies (eventual consistency).
+  - Large lags can significantly impact application performance.
+
+- **Challenge**: Managing replication lag to minimize data inconsistencies and ensure efficient operation.
