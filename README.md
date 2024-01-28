@@ -445,3 +445,30 @@ Link: https://newsletter.systemdesigncodex.com/p/why-replication-lag-occurs-in-d
   - Large lags can significantly impact application performance.
 
 - **Challenge**: Managing replication lag to minimize data inconsistencies and ensure efficient operation.
+
+# Problems Caused by Database Replication
+
+Link: https://newsletter.systemdesigncodex.com/p/problems-caused-by-db-replication
+
+1. **Vanishing Updates**
+
+   - **Scenario**: User updates data on the leader node, but a subsequent read request to a lagging replica shows outdated data.
+   - **Problem**: User experiences frustration as their updates appear to vanish.
+   - **Solution**: Implement read-after-write consistency. Methods include:
+     - Reading user-modified data from the leader.
+     - Tracking recent writes with timestamps.
+     - Monitoring and limiting queries on lagging replicas.
+
+2. **Going Backward in Time**
+
+   - **Issue**: User sees an update (e.g., a new comment) and then it disappears upon refreshing, due to a lagging replica.
+   - **User Experience**: Confusion and inconsistency.
+   - **Solution**: Ensure Monotonic Reads.
+     - Users always read from the same replica.
+     - Use hashing based on User ID for replica selection.
+
+3. **Violation of Causality**
+   - **Problem**: In sharded databases, replication lag causes sequence disorder in communication (e.g., a reply appears before the original message).
+   - **Result**: Appears as if cause and effect are reversed.
+   - **Solution**: Provide consistent prefix reads.
+     - Ensures writes are read in the order they were made.
