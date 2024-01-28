@@ -472,3 +472,79 @@ Link: https://newsletter.systemdesigncodex.com/p/problems-caused-by-db-replicati
    - **Result**: Appears as if cause and effect are reversed.
    - **Solution**: Provide consistent prefix reads.
      - Ensures writes are read in the order they were made.
+
+# How Request Coalescing Works
+
+Link: https://newsletter.systemdesigncodex.com/p/how-request-coalescing-works
+
+**Concept**: Request Coalescing is a technique for optimizing database queries by reducing redundant requests for the same data.
+
+**Application**: Successfully used by Discord to manage trillions of messages efficiently.
+
+**Functionality**:
+
+1. **Setup**: Involves intermediary data services between the API layer and the database.
+2. **Process**:
+   - When the first request is made, a worker task is initiated in the data service.
+   - Subsequent requests for the same data subscribe to this existing task.
+   - The worker task queries the database once and returns the result to all subscribers simultaneously.
+
+**Differences from Caching**:
+
+1. **Request Initiation**: In request coalescing, only the first request triggers a database query. Subsequent ones wait for its result. In caching, all requests would hit the cache.
+2. **Use with Caching**: Request coalescing can complement caching by reducing the number of hits to the cache.
+
+**Internal Working (Based on Discord's Implementation)**:
+
+- Each worker task maintains a local state with requests and a list of requesters.
+- Responses are propagated to all waiting requesters upon arrival.
+
+**Applicability**:
+
+- Request Coalescing is particularly useful for systems with high concurrency and redundant requests.
+- The necessity of this technique depends on the scale and specific challenges of the system.
+
+# How to Migrate a MySQL Database
+
+Link: https://newsletter.systemdesign.one/p/how-to-migrate-a-mysql-database
+
+**Context**: Tumblr's MySQL database, spanning 21 terabytes and 60+ billion rows across 200+ servers, necessitated a migration strategy that minimizes user impact.
+
+**Challenges**:
+
+- Maintaining high availability and scalability.
+- Minimizing downtime and user impact during migration.
+
+**Strategies Used**:
+
+1. **CQRS Pattern (Command and Query Responsibility Segregation)**:
+
+   - Separated read and write operations for the database.
+   - Ensured continuous read availability during migration.
+
+2. **Leader-Follower Replication**:
+
+   - Leader in a remote data center handled read-write operations.
+   - Local data center had followers for handling read requests.
+   - Used persistent connections to reduce latency issues.
+
+3. **Database Proxy (ProxySQL)**:
+   - Positioned in the local data center.
+   - Maintained persistent connections to the remote leader.
+   - Enabled connection pooling, improving performance and reducing disconnections.
+
+**Migration Process**:
+
+1. **Preparation**:
+   - Stored metadata of leaders, followers, and proxies in each data center.
+2. **Migration Execution**:
+   - Shifted the database leader from Data Center A to B.
+   - Automated tools redirected followers and proxies to the new leader.
+3. **Outcome**:
+   - Followers continued serving read requests.
+   - Write requests were briefly halted or buffered, resulting in minimal user impact.
+
+**Consideration for Further Improvement**:
+
+- **Leader-Leader Replication**: Could enhance write availability but poses a risk of data conflicts.
+- **Reason for Non-Use**: Potential conflicts might be why Tumblr opted against this approach.
