@@ -548,3 +548,177 @@ Link: https://newsletter.systemdesign.one/p/how-to-migrate-a-mysql-database
 
 - **Leader-Leader Replication**: Could enhance write availability but poses a risk of data conflicts.
 - **Reason for Non-Use**: Potential conflicts might be why Tumblr opted against this approach.
+
+# Durability
+
+Link: https://newsletter.francofernando.com/p/durability
+
+**Core Objective**: Durability, ensuring data is not lost despite failures like power outages, system crashes, or hardware issues.
+
+### Single-Node Database Persistence
+
+1. **Durability Method**: Data is written to nonvolatile storage (hard drive, SSD).
+2. **Transaction Processing**:
+   - **Log Writing**: Data first written to a log file before making actual data updates.
+   - **Update Execution**: After log entry, the database updates the actual data.
+   - **Role of Log**: Enables reprocessing of transactions to restore consistent state post-failure.
+   - **Efficiency**: Log writing is fast due to its append-only nature, minimizing seek time.
+
+### Distributed Database Persistence
+
+1. **Complexity**: Higher due to the need for coordination across multiple servers.
+2. **Two-Phase Commit Protocol**:
+   - **Coordinator Role**: A designated server coordinates the commit process.
+   - **Process**:
+     - Coordinator sends commit instruction to all participant servers.
+     - Waits for acknowledgments from all participants.
+     - Finalizes the transaction with a commit or rollback based on responses.
+
+# Redis
+
+Link: https://newsletter.francofernando.com/p/redis
+
+**Redis Overview**:
+
+- Redis stands for REmote DIctionary Server.
+- It's an open-source, key-value database store.
+- Functions as a data structure server, supporting various data structures like Strings, Lists, Sets, Hashes, Sorted Sets, and HyperLogLogs.
+
+**History**:
+
+- Created by Salvatore Sanfilippo in the late 2000s.
+- Developed to address scaling issues with MySQL in real-time analytics.
+- Gained popularity and wide adoption due to its efficiency and flexibility.
+
+**Operations and Data Types**:
+
+- Basic operations include `GET` and `SET`.
+- Supports diverse data structures, each with specific use cases and operations.
+
+**Redis Architectures**:
+
+1. **Single Instance**: Simplest form, running on the same or a separate server.
+2. **Replicated Instances**: Primary instance replicated across secondary instances for parallel read requests and backup.
+3. **Sentinel**: Manages high availability, monitoring, and failure handling.
+4. **Cluster**: Distributes data across multiple machines using sharding.
+
+**Data Persistency**:
+
+- Offers two methods:
+  - RDB (Redis Database Backup): Snapshot-based backups.
+  - AOF (Append Only File): Logs every change for more recent backups.
+- Choice between RDB and AOF depends on the need for speed vs. data recency.
+
+**Single-thread Model**:
+
+- Utilizes a single-threaded model for operations, avoiding multi-threading overhead.
+- Performance typically limited by memory and network, not CPU.
+
+**Use Cases**:
+
+- **Database**: As a primary key-value store.
+- **Cache**: For storing frequent queries or caching API requests.
+- **Pub/Sub**: For scalable and fast messaging systems.
+
+# Salt and Pepper
+
+Link: https://newsletter.francofernando.com/p/salt-and-pepper
+
+### 1. **Hashing**
+
+- **Method**: Converts plain text passwords into a random string of characters.
+- **Process**: User's password is hashed and compared with the stored hash during login.
+- **Common Algorithms**: MD5, SHA family. However, these are vulnerable to rainbow table attacks.
+
+### 2. **Salting**
+
+- **Purpose**: Enhances hashing by defending against pre-computation attacks like rainbow tables.
+- **Implementation**:
+  - Generate a unique salt for each password.
+  - Combine salt with the password and hash the result.
+  - Store the salt in plain text and the hashed password in the database.
+- **Validation Process**:
+  1. Retrieve the salt from the database.
+  2. Combine entered password with salt and hash.
+  3. Compare with stored hash for validation.
+- **Uniqueness**: Ensures each stored hash is unique, even for identical passwords.
+
+### 3. **Peppering**
+
+- **Function**: Adds an extra layer of security to salting.
+- **Mechanism**:
+  - Add a pepper value to the password before hashing.
+  - The pepper is not stored in the database.
+- **Login Process**:
+  - Attempt combinations of password and pepper until a match is found.
+- **Benefit**: Significantly increases the effort required for brute force attacks.
+
+**Key Takeaways**:
+
+- **Combining Techniques**: Using both salting and peppering provides robust protection.
+- **Importance of Uniqueness**: Unique salts and peppers make each hash distinct.
+- **Updating Practices**: Continuously update and improve password storage methods to counteract new hacking techniques.
+
+# Moving from Monolithic to Microservices
+
+Link: https://newsletter.systemdesigncodex.com/p/from-monolithic-to-microservices
+
+### 1. **Modular Monolith Approach**
+
+- **Concept**: Incorporates modular design within a monolithic architecture.
+- **Characteristics**:
+  - Loosely-coupled modules.
+  - Well-defined boundaries.
+  - Explicit dependencies.
+- **Structure**: Application divided into independent modules.
+- **Deployment**: Still maintains single application deployment.
+- **Advantages**:
+  - Streamlines development and maintenance.
+  - Offers microservices-like benefits without associated complexities.
+
+### 2. **Evolution to Vertical Slice Architecture**
+
+- **Design Shift**: From horizontal layers to vertical slices of business functionality.
+- **Benefits**:
+  - Scoped changes to specific business areas.
+  - Easier feature addition and modification.
+- **Microservices Potential**: Vertical modules can gradually evolve into independent microservices.
+- **Learning Opportunity**: Provides insights into domain and functional splits.
+
+### Key Takeaway
+
+- **Balance**: No inherent superiority of microservices over monoliths or vice versa.
+- **Evolutionary Approach**: Adapt the architecture to evolving application needs.
+- **Pragmatism**: Choose the architecture that best suits the project's requirements and context.
+
+# The Secret Trick to High-Availability
+
+Link: https://newsletter.systemdesigncodex.com/p/the-secret-trick-to-high-availability
+
+### Strategies for Static Stability
+
+1. **Active-Active High Availability**:
+
+   - **Implementation**: Distribute traffic across instances in multiple Availability Zones (AZs).
+   - **Example**: If two instances are needed, create three (50% over-provisioning).
+   - **Benefit**: Maintains full capacity even if an entire AZ fails.
+
+2. **Active-Passive High Availability**:
+   - **Use Case**: For stateful services like databases.
+   - **Setup**: Primary instance in one AZ and a standby in another.
+   - **Function**: Standby becomes primary if the original primary AZ goes down.
+
+### Criticism and Justification
+
+- **Criticism**: Viewed as resource wasteful due to over-provisioning.
+- **Justification**:
+  - Essential for mission-critical applications where downtime is unacceptable.
+  - Used by major cloud services like AWS (EC2, S3, RDS) to prevent outages.
+
+### Key Takeaway
+
+- **Outages as a Norm**: Disruptions are inevitable; planning for them is crucial.
+- **Risk Management**: Over-provisioning is a strategic choice to mitigate downtime risks.
+- **Context-Dependent**: The level of static stability required varies based on the system's criticality.
+
+Static stability, while resource-intensive, is a fundamental approach for ensuring continuous operation in high-stake environments where reliability and uptime are non-negotiable.
