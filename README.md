@@ -722,3 +722,42 @@ Link: https://newsletter.systemdesigncodex.com/p/the-secret-trick-to-high-availa
 - **Context-Dependent**: The level of static stability required varies based on the system's criticality.
 
 Static stability, while resource-intensive, is a fundamental approach for ensuring continuous operation in high-stake environments where reliability and uptime are non-negotiable.
+
+# 4 Types of NoSQL Databases
+
+Link: https://newsletter.systemdesigncodex.com/p/4-types-of-nosql-databases
+
+### 1. **Document Databases**
+
+- **Examples**: MongoDB, Couchbase, RavenDB.
+- **Data Storage**: In the form of JSON, BSON, or XML documents.
+- **Advantages**: Align closely with domain-level data objects in applications.
+- **Use Case**: Ideal for projects requiring a structure close to application data.
+
+### 2. **Key-Value Store**
+
+- **Examples**: Redis, etcd, DynamoDB.
+- **Structure**: Data stored as key-value pairs.
+- **Simplicity**: Resembles a two-column table (key and value).
+- **Use Cases**: Caching, shopping carts, user profiles.
+
+### 3. **Column-Oriented Database**
+
+- **Examples**: Apache Cassandra, Apache HBase.
+- **Storage Method**: Data stored in columns rather than rows.
+- **Advantages**: Efficient for analytics and aggregations on specific columns.
+- **Considerations**: Not strongly consistent; write operations can be complex.
+
+### 4. **Graph Databases**
+
+- **Examples**: Neo4j, Amazon Neptune.
+- **Concept**: Focuses on relationships between data elements (nodes and links).
+- **Strengths**: Eliminates the need for multiple table joins as in SQL databases.
+- **Use Cases**: Knowledge graphs, social networks, map-like applications.
+
+### Decision Guide:
+
+- **Document DBs**: Versatile, suitable for most applications traditionally using SQL.
+- **Key-Value Stores**: For applications requiring fast read/write access to data items.
+- **Column-Oriented**: Analytics and operations on large datasets.
+- **Graph Databases**: Applications where relationships are central to the data model.
